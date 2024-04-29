@@ -18,6 +18,14 @@ export class AppComponent implements OnInit{
       data.complete();
     });
 
+    // const observer = function (data: any) {
+    //   console.log(data);
+    // }
+
+    // const observer = (data: any) => {
+    //   console.log(data);
+    // }
+
     observable.subscribe(data => {
       console.log(data);
     });
