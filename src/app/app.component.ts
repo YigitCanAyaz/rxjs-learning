@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, observeOn } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,14 @@ import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject } fro
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
+  name: string = "";
+  ngAfterViewInit(): void {
+    asyncScheduler.schedule(() => {
+      this.name = "Hilmi";
+    });
+  }
+
   ngOnInit(): void {
     // const observable = new Observable<number>(data => {
     //   data.next(3);
@@ -63,15 +70,42 @@ export class AppComponent implements OnInit{
     // subject.next(6);
     // subject.next("Ahmet");
 
-    const subject = new AsyncSubject();
-    subject.subscribe(data => {console.log(`ObserverA ${data}`)});
-    subject.subscribe(data => {console.log(`ObserverB ${data}`)});
-    subject.next(3);
-    subject.next(4);
-    subject.subscribe(data => {console.log(`ObserverC ${data}`)});
-    subject.next(5);
-    subject.next(6);
-    subject.complete();
-    subject.next("Ahmet");
+    // const subject = new AsyncSubject();
+    // subject.subscribe(data => {console.log(`ObserverA ${data}`)});
+    // subject.subscribe(data => {console.log(`ObserverB ${data}`)});
+    // subject.next(3);
+    // subject.next(4);
+    // subject.subscribe(data => {console.log(`ObserverC ${data}`)});
+    // subject.next(5);
+    // subject.next(6);
+    // subject.complete();
+    // subject.next("Ahmet");
+
+    // scheduler
+
+    // console.log("Scheduler kullanılmayan ****");
+    // const observable = new Observable(data => {
+    //   data.next(1);
+    //   data.next(2);
+    //   data.next(3);
+    //   data.complete();
+    // });
+
+    // observable.subscribe(data => console.log(data));
+    // console.log("Scheduler kullanılmayan ****");
+    // console.log("**************");
+
+    // console.log("Scheduler kullanılan ****");
+    // const observable2 = new Observable(data => {
+    //   data.next(1);
+    //   data.next(2);
+    //   data.next(3);
+    //   data.complete();
+    // }).pipe(observeOn(asyncScheduler));
+    // observable2.subscribe(data => console.log(data));
+    // console.log("Scheduler kullanılan ****");
+
+
+    console.log("1");
   }
 }
