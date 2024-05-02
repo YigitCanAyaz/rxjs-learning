@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, bindCallback, defer, empty, observeOn, of, timer } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, bindCallback, defer, empty, from, fromEvent, generate, interval, observeOn, of, range, throwError, timer } from 'rxjs';
 import {ajax} from "rxjs/ajax"
 
 declare var $ : any;
@@ -150,7 +150,65 @@ export class AppComponent implements OnInit, AfterViewInit{
 
     // operator - empty
 
-    const result = empty();
-    result.subscribe(data => console.log(data));
+    // const result = empty();
+    // result.subscribe(data => console.log(data));
+
+    // from
+
+    // const sayilar = [5, 10, 15];
+    // const obs = from(sayilar);
+    // obs.subscribe(data => {
+    //   console.log(data);
+    // });
+
+    // const araclar = new Map<string, number>();
+    // araclar.set("Klavye", 1);
+    // araclar.set("Mouse", 2);
+    // araclar.set("Kitap", 3);
+    // const obs = from(araclar);
+    // obs.subscribe(data => {
+    //   console.log(data);
+    // });
+
+    // const button = document.getElementsByTagName("button")[0];
+    // button.addEventListener("click", () => {
+    //   console.log("tıklandı")
+    // });
+
+    // const obs = fromEvent(button, "click");
+    // obs.subscribe(event => {
+    //   console.log(event);
+    // });
+
+    // const obs = generate(100, x => x > 0, x => x = x - 3);
+    // obs.subscribe(data => console.log(data));
+
+    // interval
+
+    // const obs = interval(5000);
+    // obs.subscribe(data => console.log("Merhaba", data));
+
+    // const obs = of(1, 3, 5, "ahmet", [true, false]);
+
+    // obs.subscribe(data => {
+    //   console.log(data);
+    // })
+
+    // range
+
+    // const obs = range(555, 50);
+    // obs.subscribe(data => console.log(data));
+
+    // throwError
+
+    // throwError(new Error("Örnek bir hata")).subscribe(data => console.log(data));
+
+    // timer
+
+    // timer(3000, 250).subscribe(() => {
+    //   console.log("Merhaba");
+    // })
+
+    
   }
 }
