@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, audit, auditTime, bindCallback, combineLatest, concat, defer, empty, filter, forkJoin, from, fromEvent, generate, iif, interval, map, mapTo, merge, observeOn, of, partition, race, range, throwError, timer, zip } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, audit, auditTime, bindCallback, combineLatest, concat, debounce, debounceTime, defer, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, empty, filter, first, forkJoin, from, fromEvent, generate, ignoreElements, iif, interval, last, map, mapTo, merge, observeOn, of, partition, race, range, sample, sampleTime, single, throwError, timer, zip } from 'rxjs';
 import {ajax} from "rxjs/ajax"
 
 declare var $ : any;
@@ -15,9 +15,14 @@ declare var $ : any;
 export class AppComponent implements OnInit, AfterViewInit{
   name: string = "";
   ngAfterViewInit(): void {
-    asyncScheduler.schedule(() => {
-      this.name = "Hilmi";
-    });
+    // asyncScheduler.schedule(() => {
+    //   this.name = "Hilmi";
+    // });
+
+    // Component ayağa kalktıktan sonra tetiklenen metottur.
+    const obs = fromEvent(this.txt.nativeElement, "keyup");
+    // obs.pipe(debounce(x => interval(1000))).subscribe(data => console.log(data));
+    obs.pipe(debounceTime(100)).subscribe(data => console.log(data));
   }
 
   ngOnInit(): void {
@@ -293,5 +298,98 @@ export class AppComponent implements OnInit, AfterViewInit{
     //     const obs = interval(1000);
     // const obs2 = obs.pipe(auditTime(2000), map(x => x + ' değeri'));
     // obs2.subscribe(data => console.log(data));
+
+    // debunce
+
+    // const obs = fromEvent(document, "click");
+    // obs.pipe(debounce(x => interval(250)))
+    // .subscribe(data => console.log("tıklandı..."));
+
+    // distinct
+
+    // const obs = of(12, 3223, 232134, 4352435, 12, 43, 123123, 43, 3, 7, 15);
+    // obs.pipe(distinct(x => x)).subscribe(data => console.log(data));
+
+    // distinctUntilChanged
+
+    // const obs = of(12, 12, 3223, 232134, 4352435, 12, 43, 123123, 43, 3, 7, 15);
+    // obs.pipe(distinctUntilChanged()).subscribe(data => console.log(data));
+
+
+    // distinctUntilKeyChanged
+    // const obs = of<Person>(
+    //   {age: 10, name: "Gençay"},
+    //   {age: 15, name: "Gençay"},
+    //   {age: 20, name: "Hilmi"},
+    //   {age: 30, name: "Hilmi"},
+    //   {age: 21, name: "Rıfkı"},
+    //   {age: 22, name: "Rıfkı"},
+    //   {age: 23, name: "Rıfkı"}
+    // ).pipe(distinctUntilKeyChanged(("name"))
+    // .subscribe(data => console.log(data));
+
+    // elementAt
+
+    // const obs = of(1, 2, 3, 346, 345, 457456);
+    // obs.pipe(elementAt(5)).subscribe(data => console.log(data));
+
+    // filter
+    // const obs = of('Ahmet', 'Mehmet', 'Hilmi', 'Celayir', 'Yiğit')
+    // .pipe(filter(x => x.indexOf("a") === -1)).subscribe(data => console.log(data));
+
+    // first
+
+    // const obs = of(1,2,3)
+    // .pipe(first())
+    // .subscribe(data => console.log(data));
+
+    // ignoreElements
+
+  //   const obs = of(1, 2, 3);
+  //   obs.pipe(ignoreElements())
+  // //   .subscribe(data => console.log(data), 
+  // //   error => console.log(error), () => {
+  // //   console.log("the end");
+  // // });
+  // .subscribe({
+  //   error: error => console.log(error),
+  //   complete: () => console.log("akış bitti...")
+  // })
+
+    // last
+
+    // const obs = of(12, 2, 34, 49);
+    // obs.pipe(last()).subscribe(data => console.log(data));
+
+    // sample
+
+    // const seconds = interval(5000);
+    // const obs = fromEvent(document, "click");
+    // const result = seconds.pipe(sample(obs));
+    // result.subscribe(data => console.log(data));
+
+    // sampleTime
+
+    // const seconds = interval(5000);
+    // const obs = fromEvent(document, "click");
+    // const result = obs.pipe(sampleTime(5000));
+    // result.subscribe(data => console.log(data));
+
+    // single
+
+    // const obs = range(1, 10).pipe(single(x => x == 10))
+    // .subscribe({
+    //   next: data => console.log(data),
+    //   error: error => console.log(error)
+    // });
+
+    
   }
+
+  @ViewChild("txt") txt! : ElementRef;
+}
+
+interface Person {
+  name: string;
+  age: number;
 }
