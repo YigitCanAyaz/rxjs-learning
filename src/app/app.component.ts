@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, bindCallback, defer, empty, from, fromEvent, generate, interval, observeOn, of, range, throwError, timer } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, asyncScheduler, audit, auditTime, bindCallback, combineLatest, concat, defer, empty, filter, forkJoin, from, fromEvent, generate, iif, interval, map, mapTo, merge, observeOn, of, partition, race, range, throwError, timer, zip } from 'rxjs';
 import {ajax} from "rxjs/ajax"
 
 declare var $ : any;
@@ -209,6 +209,89 @@ export class AppComponent implements OnInit, AfterViewInit{
     //   console.log("Merhaba");
     // })
 
-    
+    // iif
+
+    // let state : boolean = true;
+    // const obs = iif(() => state, of(3, 5, 7), of(10, 11, 12));
+    // obs.subscribe(data => console.log(data));
+    // state = false;
+    // obs.subscribe(data => console.log(data));
+
+    // combineLatest
+
+    // const obs1 = timer(1500, 1000);
+    // const obs2 = timer(500, 1000);
+    // const obs3 = timer(250, 1000);
+
+    // const combine = combineLatest(obs1, obs2, obs3);
+    // combine.subscribe(data => console.log(data));
+
+    // concat
+
+    // const obs1 = of(1, 2, 3);
+    // const obs2 = of(4, 5, 6);
+    // const obs3 = of(7, 8, 9);
+
+    // const obs4 = concat(obs1, obs2, obs3);
+    // obs4.subscribe(data => console.log(data));
+
+    // forkJoin
+
+    // 3, 6, 9 döner
+    // const obs1 = of(1, 2, 3);
+    // const obs2 = of(4, 5, 6);
+    // const obs3 = of(7, 8, 9);
+
+    // const obs4 = forkJoin(obs1, obs2, obs3);
+    // obs4.subscribe(data => console.log(data));
+
+    // merge
+
+    // const obs1 = of('a', 'b', 'c');
+    // const obs2 = of(1, 2, 3);
+    // const obs3 = merge(obs1, obs2);
+    // obs3.subscribe(data => console.log(data));
+
+    // partition
+
+    // const obs1 = of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    // const [obs2, obs3] = partition(obs1, x => x % 3 == 0);
+    // obs2.subscribe(data => console.log(data + " şarta uyanlar"));
+    // obs3.subscribe(data => console.log(data + " şarta uymayanlar"));
+
+    // race
+
+    // const obs1 = interval(1000).pipe(mapTo("Ahmet"));
+    // const obs2 = interval(250).pipe(mapTo("Mehmet"));
+    // const obs3 = interval(2000).pipe(mapTo("Hilmi"));
+
+    // race(obs1, obs2, obs3).subscribe(data => console.log(data));
+
+    // zip
+
+    // 1, 4, 7 döner mesela
+    // const obs1 = of(1, 2, 3);
+    // const obs2 = of(4, 5, 6);
+    // const obs3 = of(7, 8, 9);
+
+    // zip(obs1, obs2, obs3).subscribe(data => console.log(data));
+
+    // pipe
+
+    // const obs = of(1, 2, 3, 4, 5, 123, 1232, 435, 56675, 6576435, 1243, 4545);
+    // obs.pipe(filter(x => x % 3 == 0), map(x => x + ' değeri'))
+    // .subscribe(data => console.log(data));
+
+    // audit
+
+    // const obs = interval(1000);
+    // const obs2 = obs.pipe(audit(x => interval(2000)), map(x => x + ' değeri'));
+    // obs2.subscribe(data => console.log(data));
+
+    // auditTime
+
+    //     const obs = interval(1000);
+    // const obs2 = obs.pipe(auditTime(2000), map(x => x + ' değeri'));
+    // obs2.subscribe(data => console.log(data));
   }
 }
